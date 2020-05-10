@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'criar-conta',
+    loadChildren: () => import('./criar-conta/criar-conta.module').then( m => m.CriarContaPageModule)
+  },
 ];
 
 @NgModule({
