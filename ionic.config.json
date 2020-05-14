@@ -1,5 +1,7 @@
 {
   "name": "formsApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

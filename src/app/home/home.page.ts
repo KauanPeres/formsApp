@@ -22,7 +22,7 @@ export class HomePage {
   // Mesmo que não haja nenhuma validação, devemos mesmo assim criar uma lista... "exemplo: []"
   public mensagens_validacao = {
     email: [
-      { tipo: 'required', mensagem: 'É obrigatória digitar a senha!' },
+      { tipo: 'required', mensagem: 'O campo e-mail é obrigatório' },
       { tipo: 'email', mensagem: 'E-mail inválido!' },
     ],
     senha: [
