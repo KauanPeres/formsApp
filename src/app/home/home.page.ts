@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 // Importações necessárias para formulários
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UsuarioService } from '../services/usuario.service';
 
 /*
 * Para funcionar os formulários, precisamos importar (adicionar)
@@ -32,7 +34,11 @@ export class HomePage {
     ]
   }
 
-  constructor(public formBuilder: FormBuilder, public alertController: AlertController) {
+  constructor(
+    public formBuilder: FormBuilder, 
+    public alertController: AlertController, 
+    public router: Router,
+    public usuarioService: UsuarioService) {
 
     //Monta o formulário
     this.formLogin = this.formBuilder.group({
@@ -42,8 +48,17 @@ export class HomePage {
     });
   }
 
-  public login(){
+  public async login(){
     if (this.formLogin.valid) {
+
+      let email = this.formLogin.value.email;
+      let senha = this.formLogin.value.senha;
+
+      if (await this.usuarioService.login(email, senha)){
+        this.router.navigateByUrl('painel-usuario')
+      }else {
+        this.alertUserInvalid();
+      }
 
     }else {
       this.alertFormInvalid();
@@ -54,6 +69,16 @@ export class HomePage {
     const alert = await this.alertController.create({
       header: 'Erro!',
       message: 'Formulário inválido, confira os dados.',
+      buttons: ['Ok']
+    });
+
+    await alert.present();
+  }
+
+  async alertUserInvalid() {
+    const alert = await this.alertController.create({
+      header: 'Erro!',
+      message: 'E-mail/Senha inválidos, confira os dados.',
       buttons: ['Ok']
     });
 
